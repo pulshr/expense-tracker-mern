@@ -14,10 +14,14 @@ function App() {
   async function handleSubmit(e) {
     e.preventDefault();
     const res = await fetch("http://localhost:4000/transaction", {
-      method: "POST",
-      body: form,
+      method: "POST", 
+      body: JSON.stringify(form),
+      headers: {
+        "content-type": "application/json",
+      },
     });
-    console.log(res);
+    const data = await res.json();
+    console.log(data);
   }
 
   return (
