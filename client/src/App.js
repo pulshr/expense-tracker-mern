@@ -49,6 +49,23 @@ function App() {
         />
         <button type="submit">Submit</button>
       </form>
+      <br />
+      <section>
+        <table>
+          <thead>
+            <td>Amount</td>
+            <td>Description</td>
+            <td>Date</td>
+          </thead>
+          <tbody>
+            <tr>
+              <td>1</td>
+              <td>asdfasd</td>
+              <td>asdf</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
     </div>
   );
 }
