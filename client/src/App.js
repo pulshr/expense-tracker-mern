@@ -1,5 +1,7 @@
+import Container from "@mui/material/Container";
 import AppBar from "./components/AppBar";
 import TransactionForm from "./components/TransactionForm";
+import TransactionsList from "./components/TransactionsList";
 import {useEffect,useState} from 'react';
 
 function App() {
@@ -18,26 +20,10 @@ function App() {
   return (
     <div>
       <AppBar />
-      <TransactionForm fetchTransctions={fetchTransactions} />
-      <br />
-      <section>
-        <table>
-          <thead>
-            <td>Amount</td>
-            <td>Description</td>
-            <td>Date</td>
-          </thead>
-          <tbody>
-            {transactions.map((trx) => (
-              <tr key={trx._id}>
-                <td>{trx.amount}</td>
-                <td>{trx.description}</td>
-                <td>{trx.date}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </section>
+      <Container>
+        <TransactionForm fetchTransctions={fetchTransactions} />
+        <TransactionsList transactions={transactions} />
+      </Container>
     </div>
   );
 }
