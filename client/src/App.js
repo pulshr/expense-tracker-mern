@@ -6,6 +6,7 @@ import {useEffect,useState} from 'react';
 
 function App() {
   const [transactions, setTransactions] = useState([]);
+  const [editTransaction, setEditTransaction] = useState({});
 
   useEffect(() => {
     fetchTransactions();
@@ -21,10 +22,14 @@ function App() {
     <div>
       <AppBar />
       <Container>
-        <TransactionForm fetchTransctions={fetchTransactions} />
+      <TransactionForm
+          fetchTransactions={fetchTransactions}
+          editTransaction={editTransaction}
+        />
         <TransactionsList
           transactions={transactions}
           fetchTransactions={fetchTransactions}
+          setEditTransaction={setEditTransaction}
         />
       </Container>
     </div>

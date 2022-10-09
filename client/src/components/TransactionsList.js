@@ -9,9 +9,14 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Typography from "@mui/material/Typography";
+import dayjs from "dayjs";
 import * as React from "react";
 
-export default function TransactionsList({ transactions, fetchTransctions }) {
+export default function TransactionsList({
+  transactions,
+  fetchTransctions,
+  setEditTransaction,
+}) {
   async function remove(_id) {
     if (!window.confirm("Are you sure")) return;
     const res = await fetch(`http://localhost:4000/transaction/${_id}`, {
@@ -22,6 +27,11 @@ export default function TransactionsList({ transactions, fetchTransctions }) {
       window.alert("Deleted Successfully");
     }
   }
+
+  function formatDate(date) {
+    return dayjs(date).format("DD MMM, YYYY");
+  }
+
   return (
     <>
       <Typography sx={{ marginTop: 10 }} variant="h6">
@@ -47,12 +57,21 @@ export default function TransactionsList({ transactions, fetchTransctions }) {
                   {row.amount}
                 </TableCell>
                 <TableCell align="center">{row.description}</TableCell>
-                <TableCell align="center">{row.date}</TableCell>
+                <TableCell align="center">{formatDate(row.date)}</TableCell>
                 <TableCell align="center">
-                  <IconButton color="primary" component="label">
+                  <IconButton
+                    color="primary"
+                    component="label"
+                    onClick={() => setEditTransaction(row)}
+                  >
                     <EditSharpIcon />
                   </IconButton>
-                  <IconButton color="warning" component="label" onClick={() => remove(row._id)}>
+
+                  <IconButton
+                    color="warning"
+                    component="label"
+                    onClick={() => remove(row._id)}
+                  >
                     <DeleteSharpIcon />
                   </IconButton>
                 </TableCell>
