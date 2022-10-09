@@ -9,9 +9,11 @@ import Link from "@mui/material/Link";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 import * as React from "react";
-import { Link as RouterLink } from "react-router-dom";
+import { Link as RouterLink,useNavigate } from "react-router-dom";
+import Cookie from "js-cookie";
 
 export default function Login() {
+  const navigate = useNavigate();
   const handleSubmit = async (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
@@ -28,8 +30,10 @@ export default function Login() {
       },
     });
 
+    const { token } = await res.json();
     if (res.ok) {
-      console.log("done");
+      Cookie.set("token", token);
+      navigate("/");
     }
   };
 
