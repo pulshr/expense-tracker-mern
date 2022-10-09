@@ -7,38 +7,37 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { DesktopDatePicker } from "@mui/x-date-pickers/DesktopDatePicker";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { useEffect, useState } from "react";
-
 const InitialForm = {
   amount: 0,
   description: "",
   date: new Date(),
 };
-
-export default function TransactionForm({ fetchTransctions, editTransaction }) {
+export default function TransactionForm({ fetchTransactions, editTransaction }) {
   const [form, setForm] = useState(InitialForm);
+
   useEffect(() => {
-    if (editTransaction !== {}) {
+    if (editTransaction.amount !== undefined) {
       setForm(editTransaction);
     }
   }, [editTransaction]);
   function handleChange(e) {
     setForm({ ...form, [e.target.name]: e.target.value });
   }
-
   function handleDate(newValue) {
     setForm({ ...form, date: newValue });
   }
 
   async function handleSubmit(e) {
     e.preventDefault();
-    const res = editTransaction === {} ? create() : update();
-
-    if (res.ok) {
-      setForm(InitialForm);
-      fetchTransctions();
-    }
+    editTransaction.amount === undefined ? create() : update();
   }
 
+  function reload(res) {
+    if (res.ok) {
+      setForm(InitialForm);
+      fetchTransactions();
+    }
+  }
   async function create() {
     const res = await fetch("http://localhost:4000/transaction", {
       method: "POST",
@@ -47,7 +46,7 @@ export default function TransactionForm({ fetchTransctions, editTransaction }) {
         "content-type": "application/json",
       },
     });
-    return res;
+    reload(res);
   }
 
   async function update() {
@@ -61,7 +60,7 @@ export default function TransactionForm({ fetchTransctions, editTransaction }) {
         },
       }
     );
-    return res;
+    reload(res);
   }
 
   return (
@@ -93,19 +92,19 @@ export default function TransactionForm({ fetchTransctions, editTransaction }) {
             <DesktopDatePicker
               label="Transaction Date"
               inputFormat="MM/DD/YYYY"
-              onChange={handleChange}
               value={form.date}
+              onChange={handleDate}
               renderInput={(params) => (
                 <TextField sx={{ marginRight: 5 }} size="small" {...params} />
               )}
             />
           </LocalizationProvider>
-          {editTransaction !== {} && (
+          {editTransaction.amount !== undefined && (
             <Button type="submit" variant="secondary">
               Update
             </Button>
           )}
-          {editTransaction === {} && (
+          {editTransaction.amount === undefined && (
             <Button type="submit" variant="contained">
               Submit
             </Button>

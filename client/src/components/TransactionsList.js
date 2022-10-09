@@ -14,7 +14,7 @@ import * as React from "react";
 
 export default function TransactionsList({
   transactions,
-  fetchTransctions,
+  fetchTransactions,
   setEditTransaction,
 }) {
   async function remove(_id) {
@@ -23,7 +23,7 @@ export default function TransactionsList({
       method: "DELETE",
     });
     if (res.ok) {
-      fetchTransctions();
+      fetchTransactions();
       window.alert("Deleted Successfully");
     }
   }
