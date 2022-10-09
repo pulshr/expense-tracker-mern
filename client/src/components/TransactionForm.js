@@ -20,9 +20,11 @@ export default function TransactionForm({ fetchTransactions, editTransaction }) 
       setForm(editTransaction);
     }
   }, [editTransaction]);
+
   function handleChange(e) {
     setForm({ ...form, [e.target.name]: e.target.value });
   }
+
   function handleDate(newValue) {
     setForm({ ...form, date: newValue });
   }
