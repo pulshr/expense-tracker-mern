@@ -8,11 +8,14 @@ import Grid from "@mui/material/Grid";
 import Link from "@mui/material/Link";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
-import * as React from "react";
-import { Link as RouterLink,useNavigate } from "react-router-dom";
 import Cookie from "js-cookie";
+import * as React from "react";
+import { useDispatch } from "react-redux";
+import { Link as RouterLink, useNavigate } from "react-router-dom";
+import { getUser } from "../store/auth.js";
 
 export default function Login() {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -21,7 +24,6 @@ export default function Login() {
       email: data.get("email"),
       password: data.get("password"),
     };
-
     const res = await fetch(`${process.env.REACT_APP_API_URL}/auth/login`, {
       method: "POST",
       body: JSON.stringify(form),
@@ -30,13 +32,14 @@ export default function Login() {
       },
     });
 
-    const { token } = await res.json();
+    const { token, user } = await res.json();
+
     if (res.ok) {
       Cookie.set("token", token);
+      dispatch(getUser(user));
       navigate("/");
     }
   };
-
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />

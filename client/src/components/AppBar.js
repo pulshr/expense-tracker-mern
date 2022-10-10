@@ -5,25 +5,30 @@ import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import Cookies from "js-cookie";
 import * as React from "react";
+import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
+import { logout } from "../store/auth.js";
 
 export default function ButtonAppBar() {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
-  function logout() {
+  function _logout() {
     Cookies.remove("token");
+    dispatch(logout());
     navigate("/login");
   }
+
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">
         <Toolbar>
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
             <Link className="text-white" to="/">
-            Expense Tracker
+              Expensor
             </Link>
           </Typography>
-          <Button color="inherit" onClick={logout}>
+          <Button color="inherit" onClick={_logout}>
             Logout
           </Button>
           <Link to="/login" className="text-white">
