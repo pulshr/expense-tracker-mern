@@ -5,9 +5,9 @@ This app is created to help users monitor, maintain, and categorize their expens
 Reason behind choosing MERN:
 
 MERN is a full-stack 3-tier architectural pattern involving:
-•	Front-end Tier (via React.js)
-•	Application Tier (via Express.js and Node.js)
-•	Database Tier (MongoDB)
+ - Front-end Tier (via React.js)
+ - Application Tier (via Express.js and Node.js)
+ - Database Tier (MongoDB)
 
 Following this architecture means that JSON data flows naturally from front to back, making it fast to build on and reasonably simple to debug
 Application Architecture
