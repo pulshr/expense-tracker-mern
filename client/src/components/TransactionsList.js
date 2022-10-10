@@ -12,10 +12,9 @@ import Typography from "@mui/material/Typography";
 import dayjs from "dayjs";
 import Cookies from "js-cookie";
 import * as React from "react";
-
 export default function TransactionsList({
   transactions,
-  fetchTransactions,
+  fetchTransctions,
   setEditTransaction,
 }) {
   async function remove(_id) {
@@ -31,15 +30,13 @@ export default function TransactionsList({
       }
     );
     if (res.ok) {
-      fetchTransactions();
+      fetchTransctions();
       window.alert("Deleted Successfully");
     }
   }
-
   function formatDate(date) {
     return dayjs(date).format("DD MMM, YYYY");
   }
-
   return (
     <>
       <Typography sx={{ marginTop: 10 }} variant="h6">
@@ -51,6 +48,7 @@ export default function TransactionsList({
             <TableRow>
               <TableCell align="center">Amount</TableCell>
               <TableCell align="center">Description</TableCell>
+              <TableCell align="center">Category</TableCell>
               <TableCell align="center">Date</TableCell>
               <TableCell align="center">Action</TableCell>
             </TableRow>
@@ -65,6 +63,7 @@ export default function TransactionsList({
                   {row.amount}
                 </TableCell>
                 <TableCell align="center">{row.description}</TableCell>
+                <TableCell align="center">{row.category_id}</TableCell>
                 <TableCell align="center">{formatDate(row.date)}</TableCell>
                 <TableCell align="center">
                   <IconButton
@@ -74,7 +73,6 @@ export default function TransactionsList({
                   >
                     <EditSharpIcon />
                   </IconButton>
-
                   <IconButton
                     color="warning"
                     component="label"
